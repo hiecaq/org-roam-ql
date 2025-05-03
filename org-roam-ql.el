@@ -234,6 +234,7 @@ Same as `org-roam-node-list', but doesn't treat the aliases as titles.
   priority ,
   scheduled ,
   deadline ,
+  closed ,
   title,
   properties ,
   olp,
@@ -254,6 +255,7 @@ FROM
     priority ,
     scheduled ,
     deadline ,
+    closed ,
     title,
     properties ,
     olp,
@@ -273,6 +275,7 @@ FROM
       nodes.priority as priority,
       nodes.scheduled as scheduled,
       nodes.deadline as deadline,
+      nodes.closed as closed,
       nodes.title as title,
       nodes.properties as properties,
       nodes.olp as olp,
@@ -292,7 +295,7 @@ FROM
 GROUP BY id")))
     (cl-loop for row in rows
              collect (pcase-let* ((`(
-                                    ,id ,file ,file-title ,level ,todo ,pos ,priority ,scheduled ,deadline
+                                    ,id ,file ,file-title ,level ,todo ,pos ,priority ,scheduled ,deadline, closed
                                     ,title ,properties ,olp ,atime ,mtime ,tags ,aliases ,refs)
                                   row)
                                  (all-titles (cons title aliases)))
@@ -307,6 +310,7 @@ GROUP BY id")))
                                             :priority priority
                                             :scheduled scheduled
                                             :deadline deadline
+                                            :closed closed
                                             :title title
                                             :aliases aliases
                                             :properties properties
